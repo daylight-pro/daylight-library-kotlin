@@ -1,0 +1,29 @@
+package test.aoj.itp
+
+import daylight.Scanner
+import java.io.PrintWriter
+
+@OptIn(ExperimentalStdlibApi::class)
+class P1_1_A {
+    companion object {
+        private fun solve(sc: Scanner, out: PrintWriter) {
+            out.println("Hello World")
+        }
+
+        fun main() {
+            val sc = Scanner()
+            val out = PrintWriter(System.out)
+            val t = 1
+            // val t = sc.readInt()
+            Thread(
+                null,
+                {
+                    repeat(t) { solve(sc, out) }
+                    out.flush()
+                },
+                "solve",
+                128 * 1024 * 1024
+            ).start()
+        }
+    }
+}

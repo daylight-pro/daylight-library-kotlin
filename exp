@@ -1,0 +1,93 @@
+#!/usr/bin/python3
+
+import re
+import sys
+import argparse
+from logging import Logger, basicConfig, getLogger
+from os import getenv, environ, path
+from pathlib import Path
+from typing import List
+import pyperclip
+import subprocess
+from colorama import Fore, Style
+import coloredlogs
+
+logger = getLogger(__name__)  # type: Logger
+
+my_include = re.compile('import\\s*([daylight|acl][a-zA-Z\\.]*)\\s*')
+used_atcoder = False
+
+lib_path = Path.cwd() / 'src'
+
+defined = set()
+included = set()
+
+load_error = False
+
+
+def dfs(f: str) -> List[str]:
+    global defined, included, used_atcoder, load_error
+    if f in defined:
+        logger.info('already included {}, skip'.format(f))
+        return []
+    defined.add(f)
+
+    if not path.isfile(str(lib_path / f)):
+        logger.error("can not find {}".format(f))
+        load_error = True
+        return []
+    logger.info('include {}'.format(f))
+
+    s = open(str(lib_path / f)).read()
+    result = []
+    enabled = False
+    for line in s.splitlines():
+        if line.strip() == "// --- start ---":
+            enabled = True
+            continue
+        if line.strip() == "// --- end ---":
+            enabled = False
+            continue
+        if not enabled:
+            continue
+        m = my_include.match(line)
+        if m:
+            result.extend(dfs(m.group(1)))
+            continue
+        result.append(line)
+    return result
+
+
+if __name__ == "__main__":
+    coloredlogs.install(level='INFO')
+    parser = argparse.ArgumentParser(description='Expander')
+    parser.add_argument('--source', help='Source File', default='src/Main.kt')
+    parser.add_argument('--lib', help='Path to Daylight Library')
+    opts = parser.parse_args()
+
+    s = open(opts.source).read()
+
+    result = []
+    to_be_expanded = []
+
+    expanded = False
+    for line in s.splitlines():
+        m = my_include.match(line)
+        if m:
+            to_be_expanded.append(m.group(1).replace('.', '/') + '.kt')
+            continue
+        elif not line.strip().startswith("import") and not expanded:
+            for f in to_be_expanded:
+                result.extend(dfs(f))
+            expanded = True
+        elif not line.strip().startswith("//"):
+            result.append(line)
+        
+    output = '\n'.join(result) + '\n'
+    if load_error:
+        logger.error("Failed to bundle files")
+        exit(0)
+    with open('expand.kt', 'w') as f:
+        f.write(output)
+        pyperclip.copy(output)
+        logger.info("Successfully copied")
