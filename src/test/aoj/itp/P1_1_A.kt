@@ -3,6 +3,8 @@ package test.aoj.itp
 import daylight.Scanner
 import java.io.PrintWriter
 
+// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A&lang=ja
+
 @OptIn(ExperimentalStdlibApi::class)
 class P1_1_A {
     companion object {
