@@ -1,16 +1,8 @@
-package acl
+package daylight
 
-import java.util.*
+class Dsu(private val n: Int) {
+    private var parentOrSize: IntArray = IntArray(n) { -1 }
 
-/**
- * Disjoint set union.
- */
-class DSU(private val n: Int) {
-    private val parentOrSize = IntArray(n)
-
-    /**
-     * Merge nodes.
-     */
     fun merge(a: Int, b: Int): Int {
         if (a !in 0..<n) throw IndexOutOfBoundsException("a=$a")
         if (b !in 0..<n) throw IndexOutOfBoundsException("b=$b")
@@ -18,66 +10,52 @@ class DSU(private val n: Int) {
         var y = leader(b)
         if (x == y) return x
         if (-parentOrSize[x] < -parentOrSize[y]) {
-            val tmp = x
-            x = y
-            y = tmp
+            x = y.also { y = x }
         }
         parentOrSize[x] += parentOrSize[y]
         parentOrSize[y] = x
         return x
     }
 
-    /**
-     * True if two nodes are connected.
-     */
     fun same(a: Int, b: Int): Boolean {
         if (a !in 0..<n) throw IndexOutOfBoundsException("a=$a")
         if (b !in 0..<n) throw IndexOutOfBoundsException("b=$b")
         return leader(a) == leader(b)
     }
 
-    /**
-     * Get its leader node.
-     */
+    fun size(a: Int): Int {
+        if (a !in 0..<n) throw IndexOutOfBoundsException("a=$a")
+        return parentOrSize[leader(a)]
+    }
+
     fun leader(a: Int): Int {
-        return if (parentOrSize[a] < 0) {
-            a
-        } else {
+        if (a !in 0..<n) throw IndexOutOfBoundsException("a=$a")
+        return if (parentOrSize[a] < 0) a
+        else {
             parentOrSize[a] = leader(parentOrSize[a])
             parentOrSize[a]
         }
     }
 
-    /**
-     * A group's size.
-     */
-    fun size(a: Int): Int {
-        if (a !in 0..<n) throw IndexOutOfBoundsException("" + a)
-        return -parentOrSize[leader(a)]
-    }
-
-    /**
-     * Group by leader.
-     */
-    fun groups(): ArrayList<ArrayList<Int>> {
+    fun groups(a: Int): List<List<Int>> {
         val leaderBuf = IntArray(n)
         val groupSize = IntArray(n)
         for (i in 0..<n) {
             leaderBuf[i] = leader(i)
             groupSize[leaderBuf[i]]++
         }
-        val result = ArrayList<ArrayList<Int>>(n)
+        val result = ArrayList<ArrayList<Int>>()
         for (i in 0..<n) {
             result.add(ArrayList(groupSize[i]))
         }
         for (i in 0..<n) {
             result[leaderBuf[i]].add(i)
         }
-        result.removeIf { obj: ArrayList<Int> -> obj.isEmpty() }
+        result.removeIf { v -> v.isEmpty() }
         return result
     }
 
-    init {
-        Arrays.fill(parentOrSize, -1)
+    fun count(): Int {
+        return n
     }
 }

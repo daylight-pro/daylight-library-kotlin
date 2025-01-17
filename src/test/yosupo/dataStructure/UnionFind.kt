@@ -1,16 +1,17 @@
 package test.yosupo.dataStructure
 
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/unionfind
+
+import daylight.Dsu
 import daylight.Scanner
-import acl.DSU
 import java.io.PrintWriter
 
-// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/unionfind
 
 @OptIn(ExperimentalStdlibApi::class)
 object UnionFind {
     private fun solve(sc: Scanner, out: PrintWriter) {
         val (N, Q) = sc.readInts()
-        val dsu = DSU(N)
+        val dsu = Dsu(N)
         repeat(Q) {
             val (t, u, v) = sc.readInts()
             if (t == 0) {
@@ -31,7 +32,7 @@ object UnionFind {
         val sc = Scanner()
         val out = PrintWriter(System.out)
         val t = 1
-        //     val t = sc.readInt()
+        // val t = sc.readInt()
         Thread(
             null,
             {
