@@ -4,17 +4,24 @@ import daylight.Dsu
 import daylight.Scanner
 import java.io.PrintWriter
 
+
+
+@OptIn(ExperimentalStdlibApi::class)
 object UnionFind {
     private fun solve(sc: Scanner, out: PrintWriter) {
         val (N, Q) = sc.readInts()
-        val dsu = Dsu(N)
+        val dsu = DSU(N)
         repeat(Q) {
             val (t, u, v) = sc.readInts()
-            when (t) {
-                0 -> dsu.merge(u, v)
-                1 -> println(
-                    if (dsu.same(u, v)) 1
-                    else 0
+            if (t == 0) {
+                dsu.merge(u, v)
+            } else {
+                out.println(
+                    if (dsu.same(u, v)) {
+                        1
+                    } else {
+                        0
+                    }
                 )
             }
         }
