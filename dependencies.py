@@ -7,4 +7,4 @@ with open(argv[1], 'r') as f:
     lines = f.readlines()
     for line in lines:
         if line.startswith('import '):
-            print(line.split(' ')[1].replace('.', '/')[0:-1] + '.kt')
+            print('src/' + line.split(' ')[1].replace('.', '/')[0:-1] + '.kt')
