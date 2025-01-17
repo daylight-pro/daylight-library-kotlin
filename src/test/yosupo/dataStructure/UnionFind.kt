@@ -4,7 +4,7 @@ import daylight.Scanner
 import acl.DSU
 import java.io.PrintWriter
 
-// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A&lang=ja
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/unionfind
 
 @OptIn(ExperimentalStdlibApi::class)
 class UnionFind {
