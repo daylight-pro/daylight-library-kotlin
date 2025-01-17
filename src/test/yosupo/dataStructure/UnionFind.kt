@@ -1,5 +1,7 @@
 package test.yosupo.dataStructure
 
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/unionfind
+
 import daylight.Dsu
 import daylight.Scanner
 import java.io.PrintWriter
