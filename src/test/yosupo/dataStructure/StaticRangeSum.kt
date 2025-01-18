@@ -1,30 +1,23 @@
 package test.yosupo.dataStructure
 
-// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/unionfind
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/static_range_sum
 
-import daylight.structure.Dsu
 import daylight.Scanner
+import daylight.structure.FenwickTree
 import java.io.PrintWriter
 
-
-@OptIn(ExperimentalStdlibApi::class)
-object UnionFind {
+object StaticRangeSum {
+    @OptIn(ExperimentalStdlibApi::class)
     private fun solve(sc: Scanner, out: PrintWriter) {
         val (N, Q) = sc.readInts()
-        val dsu = Dsu(N)
+        val A = sc.readLongs()
+        val fw = FenwickTree(N)
+        for (i in 0..<N) {
+            fw.add(i, A[i])
+        }
         repeat(Q) {
-            val (t, u, v) = sc.readInts()
-            if (t == 0) {
-                dsu.merge(u, v)
-            } else {
-                out.println(
-                    if (dsu.same(u, v)) {
-                        1
-                    } else {
-                        0
-                    }
-                )
-            }
+            val (l, r) = sc.readInts()
+            out.println(fw.sum(l, r))
         }
     }
 
