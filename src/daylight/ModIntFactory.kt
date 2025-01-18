@@ -1,5 +1,7 @@
 package daylight
 
+// --- start ---
+
 // from: https://github.com/Hiromi-Ayase/ac-library-kt/blob/master/src/main/kotlin/jp/atcoder/library/kotlin/modInt/ModInt.kt
 
 class ModIntFactory(private val mod: Int) {

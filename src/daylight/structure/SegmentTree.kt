@@ -1,5 +1,7 @@
 package daylight.structure
 
+// --- start ---
+
 class SegmentTree<T>(v: List<T>, private val monoid: Monoid<T>) {
     private val n = v.count()
     private val log: Int
