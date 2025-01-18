@@ -1,5 +1,8 @@
-package daylight
+package daylight.structure
 
+// --- start ---
+
+@OptIn(ExperimentalStdlibApi::class)
 class Dsu(private val n: Int) {
     private var parentOrSize: IntArray = IntArray(n) { -1 }
 
