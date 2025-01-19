@@ -2,6 +2,8 @@ package daylight.structure
 
 // --- start ---
 
+import daylight.structure.algebraicStructure.Monoid
+
 class SegmentTree<T>(v: List<T>, private val monoid: Monoid<T>) {
     private val n = v.count()
     private val log: Int
@@ -30,7 +32,7 @@ class SegmentTree<T>(v: List<T>, private val monoid: Monoid<T>) {
         d[i] = monoid.op(d[2 * i], d[2 * i + 1])
     }
 
-    fun set(p: Int, x: T) {
+    operator fun set(p: Int, x: T) {
         if (p !in 0..<n) throw IndexOutOfBoundsException("p=$p")
         val p = p + size
         d[p] = x
@@ -39,15 +41,14 @@ class SegmentTree<T>(v: List<T>, private val monoid: Monoid<T>) {
         }
     }
 
-    fun get(p: Int): T {
+    operator fun get(p: Int): T {
         if (p !in 0..<n) throw IndexOutOfBoundsException("p=$p")
         return d[p + size]
     }
 
     fun prod(l: Int, r: Int): T {
-        if (l !in 0..r) throw IllegalArgumentException("l=$l")
+        if (l !in 0..r) throw IllegalArgumentException("l=$l, r=$r")
         if (r !in 0..n) throw IndexOutOfBoundsException("r=$r")
-        if (l > r) throw IllegalArgumentException("l > r")
         var sml = monoid.e()
         var smr = monoid.e()
         var l = l + size
