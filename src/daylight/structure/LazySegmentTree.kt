@@ -22,7 +22,7 @@ class LazySegmentTree<T, U>(v: List<T>, private val monoid: OperatorMonoid<T, U>
         for (i in 0..<n) {
             d[size + i] = v[i]
         }
-        for (i in n - 1 downTo 1) {
+        for (i in size - 1 downTo 1) {
             update(i)
         }
     }
@@ -129,8 +129,8 @@ class LazySegmentTree<T, U>(v: List<T>, private val monoid: OperatorMonoid<T, U>
             l = l shr 1
             r = r shr 1
         }
-        l = l2 shr 1
-        r = r2 shr 1
+        l = l2
+        r = r2
         for (i in 1..log) {
             if ((l shr i) shl i != l) update(l shr i)
             if ((r shr i) shl i != r) update((r - 1) shr i)
