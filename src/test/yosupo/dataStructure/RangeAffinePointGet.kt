@@ -5,6 +5,7 @@ package test.yosupo.dataStructure
 import daylight.ModIntFactory
 import daylight.ModIntFactory.ModInt
 import daylight.Scanner
+import daylight.structure.LazySegmentTree
 import daylight.structure.algebraicStructure.OperatorMonoid
 import java.io.PrintWriter
 
@@ -43,7 +44,7 @@ object RangeAffinePointGet {
         for (i in 0..<N) {
             V[i] = mint.create(A[i])
         }
-        val seg = daylight.structure.LazySegmentTree(V, OM)
+        val seg = LazySegmentTree(V, OM)
         repeat(Q) {
             val row = sc.readInts()
             if (row[0] == 0) {

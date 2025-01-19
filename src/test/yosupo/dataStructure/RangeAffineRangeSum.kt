@@ -5,6 +5,7 @@ package test.yosupo.dataStructure
 import daylight.ModIntFactory
 import daylight.ModIntFactory.ModInt
 import daylight.Scanner
+import daylight.structure.LazySegmentTree
 import daylight.structure.algebraicStructure.OperatorMonoid
 import java.io.PrintWriter
 
@@ -22,7 +23,7 @@ object RangeAffineRangeSum {
         for (i in 0..<N) {
             V[i] = S(mint.create(A[i]), 1)
         }
-        val seg = daylight.structure.LazySegmentTree(V, object : OperatorMonoid<S, Pair<ModInt, ModInt>>() {
+        val seg = LazySegmentTree(V, object : OperatorMonoid<S, Pair<ModInt, ModInt>>() {
             override fun op(a: S, b: S): S {
                 return S(a.value + b.value, a.size + b.size)
             }
