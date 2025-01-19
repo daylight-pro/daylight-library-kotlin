@@ -50,7 +50,6 @@ object RangeAffineRangeSum {
                 seg.apply(l, r, Pair(mint.create(b), mint.create(c)))
             } else {
                 val (k, l, r) = row
-                val list = List<Int>(N) { i -> seg[i].value.value() }
                 out.println(seg.prod(l, r).value)
             }
         }
