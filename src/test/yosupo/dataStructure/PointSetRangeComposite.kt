@@ -3,23 +3,22 @@ package test.yosupo.dataStructure
 // competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/point_set_range_composite
 
 import daylight.ModIntFactory
+import daylight.ModIntFactory.ModInt
 import daylight.Scanner
-import daylight.structure.Monoid
 import daylight.structure.SegmentTree
+import daylight.structure.algebraicStructure.Monoid
 import java.io.PrintWriter
-
-typealias Mint = ModIntFactory.ModInt
 
 object PointSetRangeComposite {
 
     val mint = ModIntFactory(998244353)
 
-    object M : Monoid<Pair<Mint, Mint>>() {
-        override fun op(a: Pair<Mint, Mint>, b: Pair<Mint, Mint>): Pair<Mint, Mint> {
+    object M : Monoid<Pair<ModInt, ModInt>>() {
+        override fun op(a: Pair<ModInt, ModInt>, b: Pair<ModInt, ModInt>): Pair<ModInt, ModInt> {
             return Pair(a.first * b.first, b.first * a.second + b.second)
         }
 
-        override fun e(): Pair<Mint, Mint> {
+        override fun e(): Pair<ModInt, ModInt> {
             return Pair(mint.create(1), mint.create(0))
         }
     }
@@ -27,7 +26,7 @@ object PointSetRangeComposite {
     @OptIn(ExperimentalStdlibApi::class)
     fun solve(sc: Scanner, out: PrintWriter) {
         val (N, Q) = sc.readInts()
-        val V = MutableList<Pair<Mint, Mint>>(N) { M.e() }
+        val V = MutableList<Pair<ModInt, ModInt>>(N) { M.e() }
         for (i in 0..<N) {
             val (a, b) = sc.readInts()
             V[i] = (Pair(mint.create(a), mint.create(b)))
