@@ -1,7 +1,8 @@
 package daylight.structure.algebraicStructure
 
 // --- start ---
-abstract class Monoid<T> {
-    abstract fun op(a: T, b: T): T
+import daylight.structure.algebraicStructure.Semigroup
+
+abstract class Monoid<T> : Semigroup<T>() {
     abstract fun e(): T
 }
